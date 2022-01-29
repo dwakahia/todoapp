@@ -128,13 +128,15 @@
                 </div>
             </div>
 
-            <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
-                <div class="row">
-                    <div class="col-md-12 p-4 box-border">
-                        {{ $tasks->links('pagination::tailwind') }}
-                    </div>
-                </div>
-            </section>
+            @if($tasks->hasPages())
+                    <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
+                        <div class="row">
+                            <div class="col-md-12 p-4 box-border">
+                                {{ $tasks->links('pagination::tailwind') }}
+                            </div>
+                        </div>
+                    </section>
+            @endif
 
         </div>
     </main>
