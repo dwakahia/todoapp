@@ -22,13 +22,14 @@ Route::get('/', function () {
 Auth::routes();
 
 
-
-Route::middleware(['auth'])->group(function (){
+Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::post('/add-task', [TaskController::class,'store'])->name('add-task');
-    Route::get('/edit-task/{task}', [TaskController::class,'edit'])->name('edit-task');
-    Route::post('/update-task/{task}', [TaskController::class,'update'])->name('update-task');
-    Route::get('/delete-task/{task}', [TaskController::class,'delete'])->name('delete-task');
+    Route::get('/search', [TaskController::class, 'searchTask'])->name('search-task');
+    Route::post('/add-task', [TaskController::class, 'store'])->name('add-task');
+    Route::get('/edit-task/{task}', [TaskController::class, 'edit'])->name('edit-task');
+    Route::post('/update-task/{task}', [TaskController::class, 'update'])->name('update-task');
+    Route::post('/update-status-task/{task}', [TaskController::class, 'markAsChecked'])->name('check-toggle-task');
+    Route::get('/delete-task/{task}', [TaskController::class, 'delete'])->name('delete-task');
 });
 
 

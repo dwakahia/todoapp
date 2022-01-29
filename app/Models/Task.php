@@ -11,7 +11,7 @@ class Task extends Model
     use HasFactory, SoftDeletes;
 
 
-    protected $fillable = ['user_id', 'name', 'description'];
+    protected $fillable = ['user_id', 'name', 'description','status'];
 
     public function user()
     {

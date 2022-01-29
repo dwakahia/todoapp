@@ -11,12 +11,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    
+
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
-    <div id="app">
+    <div id="app" class="flex-col min-h-screen ">
         <header class="bg-blue-900 py-6">
             <div class="container mx-auto flex justify-between items-center px-6">
                 <div>
@@ -45,7 +45,15 @@
             </div>
         </header>
 
-        @yield('content')
+        <div class="flex-grow">
+            @yield('content')
+        </div>
+
+        <header class="bg-blue-900 py-6 mt-7">
+            <div class="text-center px-6 text-white">
+              <p>Tasks List &copy; {{date('Y')}}</p>
+            </div>
+        </header>
     </div>
 </body>
 </html>
