@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/update-task/{task}', [TaskController::class, 'update'])->name('update-task');
     Route::post('/update-status-task/{task}', [TaskController::class, 'markAsChecked'])->name('check-toggle-task');
     Route::get('/delete-task/{task}', [TaskController::class, 'delete'])->name('delete-task');
+
+    //posts
+    Route::get('/show-posts', [PostsController::class, 'showPosts'])->name('show-posts');
 });
 
 

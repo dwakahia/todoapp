@@ -1,7 +1,0 @@
- <form id="toggle-check-form{{$task->id}}"
-                                                  action="{{ route('check-toggle-task',['task' => $task->id]) }}"
-                                                  method="POST">
-                                                @csrf
-                                                <input type="checkbox" class="form-checkbox" name="status"
-                                                       {{$task->status == 1 ? 'Checked' : ''}}  onchange="event.preventDefault();document.getElementById('toggle-check-form{{$task->id}}').submit();">
-                                            </form>

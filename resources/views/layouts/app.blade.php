@@ -20,8 +20,11 @@
         <header class="bg-blue-900 py-6">
             <div class="container mx-auto flex justify-between items-center px-6">
                 <div>
-                    <a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline">
+                    <a href="{{ route('home') }}" class="text-lg font-semibold text-gray-100 no-underline">
                         {{ config('app.name', 'Laravel') }}
+                    </a>
+                    <a href="{{ route('show-posts') }}" class="text-lg ml-5 font-semibold text-gray-100 no-underline">
+                        Posts
                     </a>
                 </div>
                 <nav class="space-x-4 text-gray-300 text-sm sm:text-base">
