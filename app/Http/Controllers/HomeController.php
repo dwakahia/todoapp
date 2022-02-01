@@ -15,6 +15,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $tasks = (new TaskController())->getTasks();
 
         return view('home', compact('tasks'));

@@ -4,6 +4,7 @@
     <main class="sm:container sm:mx-auto sm:mt-10">
         <div class="w-full sm:px-6">
 
+
             @if (session('success'))
                 <div
                     class="text-sm border border-t-8 rounded text-blue-700 border-blue-600 bg-blue-100 px-3 py-4 mb-4"

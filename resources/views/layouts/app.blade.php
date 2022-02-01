@@ -12,6 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+
+
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
@@ -34,6 +36,7 @@
                             <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
                     @else
+                        <img class="profile-image" src="{{\Illuminate\Support\Facades\Auth::user()->present()->photourl}}" alt="">
                         <span>{{ Auth::user()->name }}</span>
 
                         <a href="{{ route('logout') }}"
