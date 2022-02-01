@@ -48,7 +48,7 @@ class PostsController extends Controller
         ]);
 
 
-        return $result->getBody();
+        return response($result->getBody());
     }
 
     public function updatePost(Request $request)
