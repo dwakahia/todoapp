@@ -4,22 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
+
 
 class PostsController extends Controller
 {
 
-    protected $BASE_URL = 'https://jsonplaceholder.typicode.com';
+
+    public function __construct()
+    {
+        $this->client = new Client(['base_uri' => 'https://jsonplaceholder.typicode.com']);
+    }
 
     public function showPosts()
     {
+
         return view('posts.posts');
     }
 
     public function getPosts()
     {
-        $result = Http::get($this->BASE_URL . '/posts');
 
-        return response($result->json());
+        $result = $this->client->request('GET', '/posts');
+
+        return response($result->getBody());
     }
 
     public function createPost(Request $request)
@@ -30,9 +38,17 @@ class PostsController extends Controller
             'userId' => 'required'
         ]);
 
-        $result = Http::post($this->BASE_URL . '/posts', $request->only('title', 'body', 'userId'));
 
-        return response($result->json());
+        $result = $this->client->request('POST', '/posts', [
+            'form_params' => [
+                'title' => $request->title,
+                'body' => $request->body,
+                'userId' => $request->userId
+            ]
+        ]);
+
+
+        return $result->getBody();
     }
 
     public function updatePost(Request $request)
@@ -44,16 +60,24 @@ class PostsController extends Controller
             'id' => 'required'
         ]);
 
-        $result = Http::put($this->BASE_URL . '/posts/' . $request->id, $request->only('title', 'body', 'userId'));
 
-        return response($result->json());
+        $result = $this->client->request('PUT', '/posts/' . $request->id, [
+            'form_params' => [
+                'title' => $request->title,
+                'body' => $request->body,
+                'userId' => $request->userId
+            ]
+        ]);
+
+        return response($result->getBody());
     }
 
     public function deletePost($id)
     {
-        $result = Http::delete($this->BASE_URL . '/posts/' . $id);
 
-        return response($result->json());
+        $result = $this->client->request('DELETE', '/posts/' . $id);
+
+        return response($result->getBody());
 
     }
 }

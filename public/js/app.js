@@ -2213,6 +2213,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.validateForm()) {
         axios.post('/create-post', this.form).then(function (response) {
+          console.log(response);
+
           _this2.posts.unshift(response.data);
 
           Vue.$toast.success('Post added successfully', {

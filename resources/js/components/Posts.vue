@@ -132,6 +132,7 @@ export default {
             this.error = {};
             if (this.validateForm()) {
                 axios.post('/create-post', this.form).then((response) => {
+                    console.log(response);
                     this.posts.unshift(response.data)
                     Vue.$toast.success('Post added successfully', {position: 'top-right'});
                     this.clearForm();
