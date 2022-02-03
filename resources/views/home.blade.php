@@ -15,8 +15,8 @@
 
             <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
 
-                <header class="font-semibold bg-gray-200 text-gray-700 py-5 px-6 sm:py-6 sm:px-8 sm:rounded-t-md">
-                    {{session('task') ? 'Update Task' : 'Add Task'}}
+                <header class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 sm:py-6 sm:px-8 sm:rounded-t-md">
+                    Tasks List
                 </header>
 
                 <div class="w-full px-6 py-2">
@@ -82,17 +82,18 @@
                 <div class="flex flex-wrap -mx-1 lg:-mx-4">
 
                     @forelse($tasks as $task)
-                        <div class="my-1 p-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+                        <div class="my-1 p-2 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
 
-                            <article class="overflow-hidden rounded-lg shadow-lg flex flex-col h-full">
-                                <header
-                                    class="flex items-center justify-between leading-tight p-2 md:p-4">
+                            <article
+                                class="overflow-hidden rounded-lg shadow-lg flex flex-col h-full p-4 @if($task->status == 1) bg-gray-300 @endif hover:bg-blue-400">
+                                <header class="flex items-center justify-between leading-tight p-2 md:p-4">
 
                                     <form id="toggle-check-form{{$task->id}}"
                                           action="{{ route('check-toggle-task',['task' => $task->id]) }}"
                                           method="POST">
                                         @csrf
-                                        <input type="checkbox" class="form-checkbox" name="status"
+                                        <input type="checkbox" @if($task->status == 1) disabled
+                                               @endif title="@if($task->status == 1) Task marked as complete @else Mark as Complete @endif" class="form-checkbox" name="status"
                                                {{$task->status == 1 ? 'Checked' : ''}}  onchange="event.preventDefault();document.getElementById('toggle-check-form{{$task->id}}').submit();">
                                     </form>
                                     <h1 class="text-lg">
@@ -103,19 +104,21 @@
 
                                 </header>
 
-                                <div class="p-3 flex-grow">
+                                <div class="my-2 flex-grow">
                                     {{$task->description}}
                                 </div>
 
                                 <footer
-                                    class="flex items-center justify-between leading-none p-2 md:p-4">
-                                    <a class="bg-blue-500 p-3 rounded-md text-white font-medium mr-2"
+                                    class="flex items-center justify-between leading p-2 md:p-4">
+                                    <a class="bg-red-700 p-3 rounded-md text-white font-medium mr-2 delete-confirm"
                                        href="{{route('delete-task',['task'=>$task->id])}}">
                                         Delete
                                     </a>
-                                    <a class="bg-red-700 p-3 rounded-md text-white font-medium"
-                                       href="{{route('edit-task',['task'=>$task->id])}}">Edit
-                                    </a>
+                                    @if($task->status == 0)
+                                        <a class="bg-blue-500 p-3 rounded-md text-white font-medium"
+                                           href="{{route('edit-task',['task'=>$task->id])}}">Edit
+                                        </a>
+                                    @endif
                                 </footer>
 
                             </article>
@@ -130,13 +133,13 @@
             </div>
 
             @if($tasks->hasPages())
-                    <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
-                        <div class="row">
-                            <div class="col-md-12 p-4 box-border">
-                                {{ $tasks->links('pagination::tailwind') }}
-                            </div>
+                <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
+                    <div class="row">
+                        <div class="col-md-12 p-4 box-border">
+                            {{ $tasks->links('pagination::tailwind') }}
                         </div>
-                    </section>
+                    </div>
+                </section>
             @endif
 
         </div>

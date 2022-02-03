@@ -2,21 +2,8 @@
     <main class="sm:container sm:mx-auto sm:mt-10">
         <div class="container my-12 mx-auto px-4 md:px-12">
 
-            <form action="" @submit.prevent="isEdit ? updatePost() : createPost()" class="my-4 w-1/2 mx-auto"
+            <form action="" @submit.prevent="isEdit ? updatePost() : createPost()" class="my-4 w-full md:w-1/2 mx-auto"
                   method="post">
-                <div class="flex flex-wrap my-3">
-                    <label for="userid" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
-                        UserId
-                    </label>
-
-                    <input id="userid" type="number" class="form-input w-full" v-model="form.userId"
-                           :class="[error.userId != null ? 'border-red-500': 'border-blue-500']"
-                           autofocus>
-
-                    <p v-if="error.userId" class="text-red-500 text-xs italic mt-4">
-                        {{ error.userId }}
-                    </p>
-                </div>
                 <div class="flex flex-wrap my-3">
                     <label for="title" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
                         Title
@@ -47,7 +34,7 @@
                     </p>
                 </div>
                 <div class="flex">
-                    <button type="submit" @click="clearForm()"
+                    <button @click.prevent="clearForm()"
                             class="w-full  font-bold whitespace-no-wrap p-3 rounded-lg   no-underline text-gray-100 bg-red-500 hover:bg-red-700 sm:py-4 mr-3">
                         Cancel
                     </button>
@@ -60,13 +47,10 @@
 
             <div class="flex flex-wrap -mx-1 lg:-mx-4">
 
-                <div v-for="(post, index) in posts" :key="index" class="my-1 p-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+                <div v-for="(post, index) in posts" :key="index"
+                     class="my-1 p-2 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
 
                     <div class="overflow-hidden rounded-lg shadow-lg flex flex-col h-full p-3">
-                        <div class="flex justify-between">
-                            <span class="my-2 text-lg font-extrabold">PostId: {{ post.id }}</span>
-                            <span class="my-2 text-lg font-extrabold">UserId: {{ post.userId }}</span>
-                        </div>
                         <span class="my-1 font-extrabold">Title</span>
                         <p class="my-1 text-base">{{ post.title }}</p>
                         <span class="my-1 font-extrabold">Post</span>
@@ -78,11 +62,11 @@
 
                         <div
                             class="flex items-center justify-between  my-1 md:p-4">
-                            <button class="bg-blue-500 p-3 rounded-md text-white font-medium mr-2"
+                            <button class="bg-red-500 p-3 rounded-md text-white font-medium mr-2"
                                     @click="deletePost(post)">
                                 Delete
                             </button>
-                            <button class="bg-red-700 p-3 rounded-md text-white font-medium"
+                            <button class="bg-blue-700 p-3 rounded-md text-white font-medium"
                                     @click="editPost(post)">Edit
                             </button>
                         </div>
@@ -131,6 +115,7 @@ export default {
         createPost() {
             this.error = {};
             if (this.validateForm()) {
+                this.form.userId = 1;
                 axios.post('/create-post', this.form).then((response) => {
                     console.log(response);
                     this.posts.unshift(response.data)
@@ -159,18 +144,31 @@ export default {
             }
         },
         deletePost(post) {
-            axios.get(`/delete-post/${post.id}`).then((response) => {
-                this.posts = this.posts.filter(response => response.id !== post.id)
-                Vue.$toast.success('Post deleted successfully', {position: 'top-right'});
-            }).catch((error) => {
-                Vue.$toast.error('something went wrong', {position: 'top-right'});
+            this.$swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.get(`/delete-post/${post.id}`).then((response) => {
+                        this.posts = this.posts.filter(response => response.id !== post.id)
+                        this.$swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }).catch((error) => {
+                        Vue.$toast.error('something went wrong', {position: 'top-right'});
+                    })
+
+                }
             })
         },
         validateForm() {
-            if (!this.form.userId) {
-                this.error.userId = 'user id is required';
-                return false;
-            }
             if (!this.form.title) {
                 this.error.title = 'title is required';
                 return false;

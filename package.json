@@ -28,6 +28,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "vue-sweetalert2": "^5.0.2",
         "vue-toast-notification": "^0.6.2"
     }
 }
