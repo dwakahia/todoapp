@@ -64,7 +64,9 @@ class TaskController extends Controller
 
         auth()->user()->notify(new TaskCompleted($task));
 
-        return redirect()->back()->with('success', 'Task updated successfully');
+
+
+        return redirect()->back()->with('success', 'Task marked as completed');
     }
 
 

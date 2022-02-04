@@ -10,7 +10,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -60,8 +59,9 @@
         </div>
     </header>
 </div>
-<script src="{{asset('/js/jquery-3.6.0.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<script type="text/javascript"  src="{{asset('/js/jquery-3.6.0.min.js')}}"></script>
+<script type="text/javascript"  src="{{asset('/js/sweetalert.min.js')}}"></script>
+<script type="text/javascript"  src="{{ asset('/js/app.js') }}" defer></script>
 <script type="text/javascript">
 
     $(document).ready(function () {

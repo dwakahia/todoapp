@@ -32,7 +32,7 @@
                             <input id="name" type="text"
                                    class="form-input w-full @error('name') border-red-500 @enderror"
                                    @if(session('task')) value="{{session('task.name')}}" @endif name="name"
-                                   required autocomplete="email" autofocus>
+                                   autocomplete="email" autofocus>
 
                             @error('name')
                             <p class="text-red-500 text-xs italic mt-4">
@@ -46,7 +46,7 @@
                             </label>
 
                             <textarea class="form-input w-full @error('description') border-red-500 @enderror"
-                                      name="description" id="description" cols="30" rows="3" required>
+                                      name="description" id="description" cols="30" rows="3">
                                 {{session('task') ? session('task.description') : ''}}
                             </textarea>
 
@@ -97,7 +97,7 @@
                                                {{$task->status == 1 ? 'Checked' : ''}}  onchange="event.preventDefault();document.getElementById('toggle-check-form{{$task->id}}').submit();">
                                     </form>
                                     <h1 class="text-lg">
-                                        <a class="no-underline hover:underline text-black" href="#">
+                                        <a class="no-underline text-black" href="#">
                                             {{ucwords($task->name)}}
                                         </a>
                                     </h1>
@@ -106,6 +106,11 @@
 
                                 <div class="my-2 flex-grow">
                                     {{$task->description}}
+                                </div>
+
+
+                                <div class="my-2">
+                                    <span class="font-bold">Added: </span>{{\Illuminate\Support\Carbon::parse($task->created_at)->diffForHumans()}}
                                 </div>
 
                                 <footer

@@ -46,11 +46,6 @@
                     </div>
 
                     <div class="flex items-center">
-                        <label class="inline-flex items-center text-sm text-gray-700" for="remember">
-                            <input type="checkbox" name="remember" id="remember" class="form-checkbox"
-                                {{ old('remember') ? 'checked' : '' }}>
-                            <span class="ml-2">{{ __('Remember Me') }}</span>
-                        </label>
 
                         @if (Route::has('password.request'))
                         <a class="text-sm text-blue-500 hover:text-blue-700 whitespace-no-wrap no-underline hover:underline ml-auto"

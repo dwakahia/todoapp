@@ -38,8 +38,7 @@
                             class="w-full  font-bold whitespace-no-wrap p-3 rounded-lg   no-underline text-gray-100 bg-red-500 hover:bg-red-700 sm:py-4 mr-3">
                         Cancel
                     </button>
-                    <button type="submit"
-                            class="w-full  font-bold whitespace-no-wrap p-3 rounded-lg   no-underline text-gray-100 bg-blue-500 hover:bg-blue-700 sm:py-4">
+                    <button type="submit" class="w-full  font-bold whitespace-no-wrap p-3 rounded-lg   no-underline text-gray-100 bg-blue-500 hover:bg-blue-700 sm:py-4">
                         {{ isEdit ? 'Update Post' : 'Add Post' }}
                     </button>
                 </div>
@@ -82,6 +81,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -103,9 +103,9 @@ export default {
         getPosts() {
             axios.get('/get-posts').then((response) => {
                 this.posts = response.data.slice(0, 5);
-                Vue.$toast.success('Posts fetched successfully', {position: 'top-right'});
+                this.$toast.success('Posts fetched successfully!');
             }).catch((error) => {
-                Vue.$toast.error('something went wrong', {position: 'top-right'});
+                this.$toast.error('something went wrong!');
             })
         },
         editPost(post) {
@@ -119,10 +119,10 @@ export default {
                 axios.post('/create-post', this.form).then((response) => {
                     console.log(response);
                     this.posts.unshift(response.data)
-                    Vue.$toast.success('Post added successfully', {position: 'top-right'});
+                    this.$toast.success('Post added successfully!');
                     this.clearForm();
                 }).catch((error) => {
-                    Vue.$toast.error('something went wrong', {position: 'top-right'});
+                    this.$toast.error('something went wrong!');
                 })
             }
         },
@@ -136,10 +136,10 @@ export default {
                         }
                         return post;
                     });
-                    Vue.$toast.success('Post updated successfully', {position: 'top-right'});
+                    this.$toast.success('Post updated successfully!');
                     this.clearForm();
                 }).catch((error) => {
-                    Vue.$toast.error('something went wrong', {position: 'top-right'});
+                    this.$toast.error('something went wrong!');
                 })
             }
         },
@@ -162,7 +162,7 @@ export default {
                             'success'
                         )
                     }).catch((error) => {
-                        Vue.$toast.error('something went wrong', {position: 'top-right'});
+                        this.$toast.error('something went wrong!');
                     })
 
                 }
